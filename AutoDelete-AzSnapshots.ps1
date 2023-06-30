@@ -36,8 +36,7 @@ Foreach($Snapshot in $Snapshots)
     # If snapshot is 3+ days old and does not have the Azure tag to exclude from deletion
     If ($Snapshot.TimeCreated -lt ([datetime]::UtcNow.AddDays(-3)) -and $tags.snapshotLock -ne 'canNotDelete')
     {       
-        Write-Output "$($resource.Name) is being deleted"
         # Delete snapshot
-        Get-AzSnapshot -SnapshotName $Snapshot.Name | Remove-AzSnapshot -Force    
+        Get-AzSnapshot -SnapshotName $Snapshot.Name | Remove-AzSnapshot -Verbose -Force
     }
 }
