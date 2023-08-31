@@ -28,11 +28,11 @@ $snapshots = Get-AzSnapshot
 foreach($snapshot in $snapshots) {
     # Get snapshot's Azure tags
     $snapshotTags = (Get-AzResource -Name $snapshot.Name).Tags
-    # If snapshot is within 3 days old, report that it has been skipped
+    # If snapshot is within 3 days old, output that it has been skipped
     if ($snapshot.TimeCreated -gt ([datetime]::UtcNow.AddDays(-3))) {
         Write-Output "Snapshot $($snapshot.Name) is not due for deletion yet as it is not older than 3 days, skipping snapshot"
     }
-    # If snapshot is 3+ days old and has the Azure tag applied to exclude from deletion, report that it has been excluded
+    # If snapshot is 3+ days old and has the Azure tag applied to exclude from deletion, output that it has been excluded
     if ($snapshot.TimeCreated -lt ([datetime]::UtcNow.AddDays(-3)) -and $snapshotTags.snapshotLock -eq 'doNotDelete') {
         Write-Output "Snapshot $($snapshot.Name) is due for deletion as it is older than 3 days, but was excluded. It is currently marked for exclusion from deletion via Azure tag 'snapshotLock:doNotDelete' currently applied on snapshot"
     }
