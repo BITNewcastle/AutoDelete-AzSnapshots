@@ -1,12 +1,12 @@
 ﻿<#
     .SYNOPSIS
-        Within an Azure subscription, this script automatically deletes manual snapshots older than 3 days.
+        Within an Azure subscription, automatically deletes manual snapshots older than 3 days.
     .DESCRIPTION
         This script is deployed via Bicep, in the form of a PowerShell Runbook under an Automation Account running on a recurring schedule.
         The Automation Account requires a system assigned managed identity. The identity requires 'Disk Snapshot Contributor' RBAC permissions assigned to the tenant's Azure subscription.
-        It first initialises the connection to Azure with the system managed identity. 
         If you are running this script ad-hoc and not in the context of a runbook, simply comment out the initialisations, and run Connect-AzAccount and sign in as a tenant admin with appropriate RBAC permissions, prior to running script.
-        The script gets and iterates through all Azure snapshots. If the snapshot meets the conditions (created 3+ days ago and does not have the excusion Azure Tags applied (snapshotLock : doNotDelete)), it then deletes the snapshot.
+        It first initialises the connection to Azure with the system assigned managed identity.       
+        It then gets and iterates through all Azure snapshots. If the snapshot meets the conditions (created 3+ days ago and does not have the excusion Azure Tags applied (snapshotLock : doNotDelete)), it then deletes the snapshot.
     .NOTES
         AUTHOR: Christopher Cooper
 #>
