@@ -34,7 +34,7 @@ foreach($snapshot in $snapshots) {
     }
     # If snapshot is 3+ days old and has the Azure tag applied to exclude from deletion, report that it has been excluded
     if ($snapshot.TimeCreated -lt ([datetime]::UtcNow.AddDays(-3)) -and $snapshotTags.snapshotLock -eq 'doNotDelete') {
-        Write-Output "Snapshot $($snapshot.Name) is due for deletion as it is older than 3 days, but was excluded. It is currently marked for exclusion from deletion via Azure tags snapshotLock:doNotDelete currently applied on snapshot"
+        Write-Output "Snapshot $($snapshot.Name) is due for deletion as it is older than 3 days, but was excluded. It is currently marked for exclusion from deletion via Azure tag 'snapshotLock:doNotDelete' currently applied on snapshot"
     }
     # If snapshot is 3+ days old and does not have the Azure tag applied to exclude from deletion, delete snapshot
     if ($snapshot.TimeCreated -lt ([datetime]::UtcNow.AddDays(-3)) -and $snapshotTags.snapshotLock -ne 'doNotDelete') {       
